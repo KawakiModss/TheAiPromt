@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://files.catbox.moe/rx3ejz.jpg" type="image/x-icon">
+    <title>The AI Prompt  - Hiroko</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <!-- Particle Canvas Background -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Nebula Overlay -->
+    <div class="nebula-overlay"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <img src="https://mgx-backend-cdn.metadl.com/generate/images/934726/2026-03-12/481fa4ba-7fa8-4f9a-ac85-b9354ae8699c.png" alt="Hiroko Logo" class="header-logo">
+            <div class="header-brand">
+                <span class="header-name">kawakiTamvan</span>
+                <span class="header-subtitle">THE AI PROMPT</span>
+            </div>
+        </div>
+        <nav class="header-right">
+            <button class="nav-btn" id="settingsBtn" title="Server Settings">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"></path>
+                </svg>
+                Server Settings
+            </button>
+            <a href="https://t.me/youknowkawaki" target="_blank" rel="noopener noreferrer" class="nav-link">Hubungi Developer</a>
+            <a href="#prompts" class="nav-link">Prompt Collection</a>
+        </nav>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <!-- Mobile Nav -->
+    <div class="mobile-nav" id="mobileNav">
+        <button class="nav-btn mobile" id="settingsBtnMobile" title="Server Settings">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"></path>
+            </svg>
+            Server Settings
+        </button>
+        <a href="https://t.me/youknowkawaki" target="_blank" rel="noopener noreferrer" class="nav-link">Hubungi Developer</a>
+        <a href="#prompts" class="nav-link">Prompt Collection</a>
+    </div>
+
+    <!-- Server Connection Status Bar -->
+    <div class="connection-bar" id="connectionBar">
+        <div class="connection-bar-inner">
+            <span class="connection-dot" id="connectionDot"></span>
+            <span class="connection-text" id="connectionText">Tidak terhubung ke Server - Data hanya tersimpan di sesi ini</span>
+            <button class="connection-setup-btn" id="connectionSetupBtn">Setup Server</button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg" style="background-image: url('https://mgx-backend-cdn.metadl.com/generate/images/934726/2026-03-12/dd2d3532-6edb-4c87-b063-701d9accda7b.png')"></div>
+        <div class="hero-content">
+            <p class="hero-badge">by KawakiTamvan</p>
+            <h1 class="hero-title">The AI Prompt</h1>
+            <p class="hero-desc">Koleksi prompt AI terbaik untuk berbagai platform. Simpan, kelola, dan gunakan kembali prompt favoritmu.</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="totalPrompts">0</span>
+                    <span class="stat-label">Total Prompts</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-number" id="totalPlatforms">0</span>
+                    <span class="stat-label">AI Platforms</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content" id="prompts">
+        <!-- Search and Controls -->
+        <div class="controls">
+            <div class="search-wrapper">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" id="searchInput" class="search-input" placeholder="Cari prompt...">
+            </div>
+            <div class="controls-right">
+                <div class="view-toggle">
+                    <button class="view-btn active" id="gridViewBtn" title="Grid View">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                        </svg>
+                    </button>
+                    <button class="view-btn" id="listViewBtn" title="List View">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <button class="btn-add" id="addPromptBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Tambah Prompt
+                </button>
+            </div>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="filter-tabs" id="filterTabs">
+            <button class="filter-tab active" data-filter="Semua">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                </svg>
+                Semua (<span id="countAll">0</span>)
+            </button>
+            <button class="filter-tab" data-filter="ChatGPT">ChatGPT (<span id="countChatGPT">0</span>)</button>
+            <button class="filter-tab" data-filter="Claude">Claude (<span id="countClaude">0</span>)</button>
+            <button class="filter-tab" data-filter="Gemini">Gemini (<span id="countGemini">0</span>)</button>
+            <button class="filter-tab" data-filter="DeepSeek">DeepSeek (<span id="countDeepSeek">0</span>)</button>
+            <button class="filter-tab" data-filter="Grok">Grok (<span id="countGrok">0</span>)</button>
+            <button class="filter-tab" data-filter="Copilot">Copilot (<span id="countCopilot">0</span>)</button>
+            <button class="filter-tab" data-filter="Perplexity">Perplexity (<span id="countPerplexity">0</span>)</button>
+            <button class="filter-tab" data-filter="Qwen AI">Qwen AI (<span id="countQwen">0</span>)</button>
+            <button class="filter-tab" data-filter="Llama">Llama (<span id="countLlama">0</span>)</button>
+            <button class="filter-tab" data-filter="Midjourney">Midjourney (<span id="countMidjourney">0</span>)</button>
+            <button class="filter-tab" data-filter="Stable Diffusion">Stable Diffusion (<span id="countStableDiffusion">0</span>)</button>
+            <button class="filter-tab" data-filter="Dola">Dola (<span id="countDola">0</span>)</button>
+        </div>
+
+        <!-- Prompt Grid -->
+        <div class="prompt-grid" id="promptGrid">
+            <!-- Cards rendered by JS -->
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="emptyState" style="display:none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="48" height="48">
+                <path d="M9 12h6m-3-3v6m-7 4h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+            <p>Tidak ada prompt ditemukan</p>
+        </div>
+    </main>
+
+    <!-- Modal Add/Edit Prompt -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Tambah Prompt Baru</h2>
+                <button class="modal-close" id="modalClose">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <form id="promptForm">
+                <div class="form-group">
+                    <label class="form-label" for="promptTitle">Judul Prompt</label>
+                    <input type="text" id="promptTitle" class="form-input" placeholder="Masukkan judul prompt..." required>
+                </div>
+                
+                <!-- Custom Platform Selector -->
+                <div class="form-group">
+                    <label class="form-label">AI Platform</label>
+                    <div class="custom-platform-dropdown" id="platformDropdown">
+                        <div class="platform-dropdown-trigger" id="platformDropdownTrigger">
+                            <div class="platform-selected">
+                                <span class="platform-placeholder">Pilih platform AI...</span>
+                            </div>
+                            <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                                <path d="m6 9 6 6 6-6"/>
+                            </svg>
+                        </div>
+                        <div class="platform-dropdown-menu" id="platformDropdownMenu">
+                            <div class="platform-option" data-value="ChatGPT">
+                                <div class="platform-icon platform-chatgpt">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                                    </svg>
+                                </div>
+                                <span class="platform-name">ChatGPT</span>
+                                <span class="platform-badge platform-badge-chatgpt">OpenAI</span>
+                            </div>
+                            <div class="platform-option" data-value="Claude">
+                                <div class="platform-icon platform-claude">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                                    </svg>
+                                </div>
+                                <span class="platform-name">Claude</span>
+                                <span class="platform-badge platform-badge-claude">Anthropic</span>
+                            </div>
+                            <div class="platform-option" data-value="Gemini">
+                                <div class="platform-icon platform-gemini">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                                        <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z"/>
+                                    </svg>
+                                </div>
+                                <span class="platform-name">Gemini</span>
+                                <span class="platform-badge platform-badge-gemini">Google</span>
+                            </div>
+                            <div class="platform-option" data-value="DeepSeek">
+                                <div class="platform-icon platform-deepseek">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                                        <path d="M12 2L2 22h20L12 2zm0 3.5L18.5 20h-13L12 5.5z"/>
+                                    </svg>
+                                </div>
+                                <span class="platform-name">DeepSeek</span>
+                                <span class="platform-badge platform-badge-deepseek">AI Lab</span>
+                            </div>
+                            <div class="platform-option" data-value="Grok">
+                                <div class="platform-icon platform-grok">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" fill="none"/>
+                                    </svg>
+                                </div>
+                                <span class="platform-name">Grok</span>
+                                <span class="platform-badge platform-badge-grok">xAI</span>
+                            </div>
+                            <div class="platform-option" data-value="Copilot">
+                                <div class="platform-icon platform-copilot">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                    </svg>
+                                </div>
+                                <span class="platform-name">Copilot</span>
+                                <span class="platform-badge platform-badge-copilot">Microsoft</span>
+                            </div>
+                            <div class="platform-option" data-value="Perplexity">
+                                <div class="platform-icon platform-perplexity">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                                    </svg>
+                                </div>
+                                <span class="platform-name">Perplexity</span>
+                                <span class="platform-badge platform-badge-perplexity">Search</span>
+                            </div>
+                            <div class="platform-option" data-value="Qwen AI">
+                                <div class="platform-icon platform-qwen">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                                        <path d="M12 2L4 7v10l8 5 8-5V7l-8-5zm0 2.5L17.5 8 12 11.5 6.5 8 12 4.5z"/>
+                                    </svg>
+                                </div>
+                                <span class="platform-name">Qwen AI</span>
+                                <span class="platform-badge platform-badge-qwen">Alibaba</span>
+                            </div>
+                            <div class="platform-option" data-value="Llama">
+                                <div class="platform-icon platform-llama">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5z"/>
+                                    </svg>
+                                </div>
+                                <span class="platform-name">Llama</span>
+                                <span class="platform-badge platform-badge-llama">Meta</span>
+                            </div>
+                            <div class="platform-option" data-value="Midjourney">
+                                <div class="platform-icon platform-midjourney">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                                        <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z"/>
+                                    </svg>
+                                </div>
+                                <span class="platform-name">Midjourney</span>
+                                <span class="platform-badge platform-badge-midjourney">Image</span>
+                            </div>
+                            <div class="platform-option" data-value="Stable Diffusion">
+                                <div class="platform-icon platform-stable">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                                    </svg>
+                                </div>
+                                <span class="platform-name">Stable Diffusion</span>
+                                <span class="platform-badge platform-badge-stable">Stability</span>
+                            </div>
+                            <div class="platform-option" data-value="Dola">
+                                <div class="platform-icon platform-dola">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="2"/>
+                                    </svg>
+                                </div>
+                                <span class="platform-name">Dola</span>
+                                <span class="platform-badge platform-badge-dola">Assistant</span>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="promptPlatform" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="promptContent">Teks Prompt</label>
+                    <textarea id="promptContent" class="form-textarea" placeholder="Masukkan teks prompt..." rows="8" required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" id="btnCancel">Batal</button>
+                    <button type="submit" class="btn-save" id="btnSave">Simpan Prompt</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal View Full Prompt -->
+    <div class="modal-overlay" id="viewModalOverlay">
+        <div class="modal modal-view">
+            <div class="modal-header">
+                <div class="modal-header-info">
+                    <h2 class="modal-title" id="viewModalTitle"></h2>
+                    <span class="tag" id="viewModalTag"></span>
+                </div>
+                <button class="modal-close" id="viewModalClose">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="view-modal-content">
+                <p id="viewModalContent"></p>
+            </div>
+            <div class="view-modal-footer">
+                <span class="view-modal-date" id="viewModalDate"></span>
+                <button class="btn-copy-full" id="viewModalCopy">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+                    </svg>
+                    Salin Prompt
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Server Settings -->
+    <div class="modal-overlay" id="settingsModalOverlay">
+        <div class="modal modal-settings">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22" style="vertical-align: middle; margin-right: 8px;">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    Server Settings
+                </h2>
+                <button class="modal-close" id="settingsModalClose">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="settings-info">
+                <p>Hubungkan ke repository Server untuk menyimpan dan mengelola prompt secara real-time. Perubahan (tambah, edit, hapus) akan langsung tersimpan ke file database.json di repository kamu.</p>
+            </div>
+
+            <form id="settingsForm">
+                <div class="form-group">
+                    <label class="form-label" for="ghToken">
+                        Server Personal Access Token (GHP)
+                    </label>
+                    <div class="input-with-toggle">
+                        <input type="password" id="ghToken" class="form-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+                        <button type="button" class="toggle-visibility" id="toggleToken" title="Tampilkan/Sembunyikan">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </button>
+                    </div>
+                    <span class="form-hint">Token harus memiliki izin "repo" (read/write). Buat di Server > Settings > Developer settings > Personal access tokens</span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="ghUsername">Server Username</label>
+                    <input type="text" id="ghUsername" class="form-input" placeholder="contoh: KawakiTamvan">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="ghRepo">Nama Repository</label>
+                    <input type="text" id="ghRepo" class="form-input" placeholder="contoh: the-ai-promt">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="ghBranch">Branch (opsional)</label>
+                    <input type="text" id="ghBranch" class="form-input" placeholder="main" value="main">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="ghPath">Path ke database.json (opsional)</label>
+                    <input type="text" id="ghPath" class="form-input" placeholder="database.json" value="database.json">
+                </div>
+
+                <div class="settings-status" id="settingsStatus" style="display:none;">
+                    <span class="status-icon" id="statusIcon"></span>
+                    <span class="status-text" id="statusText"></span>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" id="btnDisconnect" style="display:none;">Putuskan Koneksi</button>
+                    <button type="button" class="btn-test" id="btnTestConnection">Test Koneksi</button>
+                    <button type="submit" class="btn-save">Simpan & Hubungkan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <span class="loading-text" id="loadingText">Menyimpan ke Server...</span>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span id="toastMessage"></span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <span>2026 KawakiTamvan - The AI Prompt</span>
+            </div>
+            <div class="footer-right">
+                <a href="https://t.me/youknowkawaki" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                        <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                    </svg>
+                    Telegram @YouKnowKawaki
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="./script.js"></script>
+</body>
+</html>
