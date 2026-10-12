@@ -1,0 +1,18 @@
+{
+  "id": "musikfarx.app",
+  "name": "MusikFarX!",
+  "short_name": "MusikFarX!",
+  "description": "MusikFarX! - pemutar musik modern tanpa login, dengan lirik dan unduhan MP3.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#08090B",
+  "theme_color": "#08090B",
+  "categories": ["music", "entertainment"],
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

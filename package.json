@@ -1,0 +1,21 @@
+{
+  "name": "musikfarx",
+  "private": true,
+  "version": "1.0.0",
+  "description": "MusikFarX! - modern no-login web music player (UI by MusikFarX, playback backend from NanzMusify, mp3 resolver from SpotiDown scraper)",
+  "scripts": {
+    "lint": "node --check public/app.js && node --check public/ui.js && node --check server.js && node --check api/spotidown.js",
+    "dev": "node server.js",
+    "build": "echo 'No build required'",
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "axios": "^1.18.1",
+    "express": "^5.2.1",
+    "playwright": "^1.64.0",
+    "puppeteer-core": "^25.13.0"
+  }
+}
